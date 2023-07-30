@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class TankFollower : MonoBehaviour {
 
-    [SerializeField] Transform tank;
+    private Transform tank;
 
     Vector3 initPos;
     Vector3 tankInitPos;
 
-    private void Awake() {
+    public void SetTank(Transform t) {
+        tank = t;
         initPos = transform.position;
         tankInitPos = tank.position;
     }
 
     private void Update() {
-        transform.position = initPos + (tank.position - tankInitPos);
+        if (tank) {
+            transform.position = initPos + (tank.position - tankInitPos);
+        }
     }
 
 }

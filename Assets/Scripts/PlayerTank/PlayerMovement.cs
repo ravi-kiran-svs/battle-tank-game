@@ -19,24 +19,6 @@ public class PlayerMovement : MonoBehaviour {
         rgbd = GetComponent<Rigidbody>();
     }
 
-    private void Update() {
-        /*speed.x = joystick.Horizontal; //Input.GetAxis("Horizontal1");
-        speed.z = joystick.Vertical; //Input.GetAxis("Vertical1");
-        speed.y = 0;
-        speed = Quaternion.Euler(0, 45, 0) * speed;
-        speed = speed.normalized * v_max;
-
-        if (speed.magnitude != 0) {
-            //dir.y = Vector3.Angle(Vector3.up, speed);
-            dir = speed;
-        }
-
-        transform.position = transform.position + speed * Time.deltaTime;
-
-        //transform.eulerAngles = dir;
-        transform.rotation = Quaternion.LookRotation(dir);*/
-    }
-
     private void FixedUpdate() {
         dir = RIGHT * joystick.Horizontal + UP * joystick.Vertical;
         dir = dir.normalized;
