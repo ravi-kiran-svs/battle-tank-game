@@ -13,9 +13,17 @@ public class TankView : MonoBehaviour {
 
     Vector3 dir = Vector3.right;
 
+    public Transform muzzle;
+
     public void SetTankController(TankController controller) {
         tankController = controller;
         tankController.rgbd = GetComponent<Rigidbody>();
+    }
+
+    private void Update() {
+        if (Input.GetButtonDown("Fire1")) {
+            tankController.Fire(muzzle.position, transform.forward);
+        }
     }
 
     private void FixedUpdate() {
