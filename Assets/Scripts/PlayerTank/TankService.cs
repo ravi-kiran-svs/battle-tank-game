@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankService : MonoBehaviour {
 
     [SerializeField] private EnemyTankService enemyTankService;
+    [SerializeField] private AnimeDeathCam animeDeathCam;
 
     [SerializeField] private GameObject TankPrefab;
     [SerializeField] private GameObject TankDestroyPrefab;
@@ -49,9 +50,9 @@ public class TankService : MonoBehaviour {
         yield return new WaitForSeconds(3);
 
         enemyTankService.OnGameOver();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
-        Debug.Log("Anime shit");
+        animeDeathCam.PlayAnimeDeath();
 
     }
 }
