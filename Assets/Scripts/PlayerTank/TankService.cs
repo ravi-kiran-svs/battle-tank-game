@@ -5,6 +5,8 @@ using UnityEngine;
 public class TankService : MonoBehaviour {
 
     [SerializeField] private GameObject TankPrefab;
+    [SerializeField] private GameObject TankDestroyPrefab;
+
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private TankFollower cam;
 
@@ -34,6 +36,10 @@ public class TankService : MonoBehaviour {
     }
 
     public void OnTankDeath() {
+        Vector3 p = tank.transform.position;
+
         Destroy(tank);
+
+        Instantiate(TankDestroyPrefab, p, TankDestroyPrefab.transform.rotation, transform);
     }
 }

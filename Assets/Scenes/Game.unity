@@ -1184,6 +1184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TankPrefab: {fileID: 885580882188879711, guid: c791d427ec59ac6468532d556bf7e44d,
     type: 3}
+  TankDestroyPrefab: {fileID: 4496990072743299670, guid: a7c2148967acbf5429432b99a7e7f395,
+    type: 3}
   joystick: {fileID: 1687666068}
   cam: {fileID: 1391056266}
   tankPresets:
