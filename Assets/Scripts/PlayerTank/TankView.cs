@@ -32,4 +32,10 @@ public class TankView : MonoBehaviour {
 
         tankController.Move(dir);
     }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.collider.GetComponent<EnemyTankView>()) {
+            tankController.onDeath();
+        }
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,5 +28,9 @@ public class TankController {
 
     public void Fire(Vector3 p, Vector3 dir) {
         tankService.SpawnBullet(p, dir, tankModel.damage);
+    }
+
+    public void onDeath() {
+        tankService.OnTankDeath();
     }
 }
