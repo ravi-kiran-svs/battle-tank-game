@@ -6,6 +6,7 @@ public class TankService : MonoBehaviour {
 
     [SerializeField] private EnemyTankService enemyTankService;
     [SerializeField] private AnimeDeathCam animeDeathCam;
+    [SerializeField] private Level level;
 
     [SerializeField] private GameObject TankPrefab;
     [SerializeField] private GameObject TankDestroyPrefab;
@@ -53,6 +54,6 @@ public class TankService : MonoBehaviour {
         yield return new WaitForSeconds(1);
 
         animeDeathCam.PlayAnimeDeath();
-
+        StartCoroutine(level.DestroyEverything());
     }
 }
