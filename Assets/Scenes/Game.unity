@@ -1182,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0ad4718c6f081458d1e94c84f6165c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTankService: {fileID: 1229122970}
   TankPrefab: {fileID: 885580882188879711, guid: c791d427ec59ac6468532d556bf7e44d,
     type: 3}
   TankDestroyPrefab: {fileID: 4496990072743299670, guid: a7c2148967acbf5429432b99a7e7f395,

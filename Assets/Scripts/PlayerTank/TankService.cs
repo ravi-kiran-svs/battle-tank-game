@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankService : MonoBehaviour {
 
+    [SerializeField] private EnemyTankService enemyTankService;
+
     [SerializeField] private GameObject TankPrefab;
     [SerializeField] private GameObject TankDestroyPrefab;
 
@@ -36,10 +38,20 @@ public class TankService : MonoBehaviour {
     }
 
     public void OnTankDeath() {
-        Vector3 p = tank.transform.position;
+        StartCoroutine(StartDeathCoroutines());
+    }
 
+    private IEnumerator StartDeathCoroutines() {
+        Vector3 p = tank.transform.position;
         Destroy(tank);
 
         Instantiate(TankDestroyPrefab, p, TankDestroyPrefab.transform.rotation, transform);
+        yield return new WaitForSeconds(3);
+
+        enemyTankService.OnGameOver();
+        yield return new WaitForSeconds(3);
+
+        Debug.Log("Anime shit");
+
     }
 }
