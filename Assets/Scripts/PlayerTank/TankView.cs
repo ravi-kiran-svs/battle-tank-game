@@ -6,7 +6,7 @@ public class TankView : MonoBehaviour {
 
     public FixedJoystick joystick;
 
-    private TankController tankController;
+    public TankController tankController;
 
     Vector3 RIGHT = new Vector3(1, 0, -1);
     Vector3 UP = new Vector3(1, 0, 1);
