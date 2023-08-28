@@ -16,4 +16,10 @@ public class EnemyTankView : MonoBehaviour {
     private void FixedUpdate() {
         tankController.Move();
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.GetComponent<TankView>()) {
+            tankController.OnTankEnteredVisibleRange(other.transform.position);
+        }
+    }
 }

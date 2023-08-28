@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyTankService : MonoBehaviour {
 
     [SerializeField] private EnemyTankView EnemyTankPrefab;
+    [SerializeField] private GameObject EnemyTankExplodePrefab;
     [SerializeField] private Transform path;
 
     private int num_tanks = 0;
@@ -25,10 +26,10 @@ public class EnemyTankService : MonoBehaviour {
 
             TankModel tankModel = new TankModel(100, 100, 20);
 
-            int point = Random.Range(0, waypoints.Count);
+            int point = Random.Range(0, waypoints.Count / 2) * 2;
             EnemyTankView tankView = Instantiate<EnemyTankView>(EnemyTankPrefab, waypoints[point], EnemyTankPrefab.transform.rotation, transform);
 
-            EnemyTankController tankController = new EnemyTankController(tankModel, tankView, waypoints, point);
+            EnemyTankController tankController = new EnemyTankController(tankModel, tankView, waypoints[point], waypoints[point + 1]);
             tankController.tankService = this;
 
             num_tanks++;
@@ -37,5 +38,19 @@ public class EnemyTankService : MonoBehaviour {
 
     public void OnDeath() {
         num_tanks--;
+    }
+
+    public void OnGameOver() {
+        CancelInvoke();
+
+        for (int i = 0; i < num_tanks + 1; i++) {
+            GameObject tank = transform.GetChild(i).gameObject;
+
+            if (tank.GetComponent<EnemyTankView>()) {
+                Vector3 p = tank.transform.position;
+                Destroy(transform.GetChild(i).gameObject);
+                Instantiate(EnemyTankExplodePrefab, p, EnemyTankExplodePrefab.transform.rotation, transform);
+            }
+        }
     }
 }

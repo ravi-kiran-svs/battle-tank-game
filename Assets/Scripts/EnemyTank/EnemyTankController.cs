@@ -4,35 +4,48 @@ using UnityEngine;
 
 public class EnemyTankController {
 
-    private TankModel tankModel;
-    private EnemyTankView tankView;
+    public TankModel tankModel;
+    public EnemyTankView tankView;
     public EnemyTankService tankService;
 
-    public Rigidbody rgbd { private get; set; }
+    public Rigidbody rgbd { get; set; }
 
-    int target;
-    List<Vector3> waypoints;
+    private EnemyTankState currentState;
 
-    public EnemyTankController(TankModel model, EnemyTankView view, List<Vector3> points, int to) {
+
+    public EnemyTankController(TankModel model, EnemyTankView view, Vector3 p1, Vector3 p2) {
         tankModel = model;
         tankView = view;
 
         tankView.SetTankController(this);
 
-        waypoints = points;
-        target = (to + 1) % waypoints.Count;
+        ChangeState(tankView.GetComponent<PatrolState>());
+        tankView.GetComponent<PatrolState>().patrolPoints.Add(p1);
+        tankView.GetComponent<PatrolState>().patrolPoints.Add(p2);
+        tankView.GetComponent<PatrolState>().target = 1;
     }
 
     public void Move() {
-        rgbd.velocity = (waypoints[target] - rgbd.position).normalized * tankModel.v_max * Time.fixedDeltaTime;
-        (tankView as MonoBehaviour).transform.rotation = Quaternion.LookRotation(rgbd.velocity);
-
-        if ((waypoints[target] - rgbd.position).magnitude < 0.1) {
-            target = (target + 1) % waypoints.Count;
-        }
+        currentState.Tick();
     }
 
     public void OnDeath() {
         tankService.OnDeath();
+    }
+
+    public void ChangeState(EnemyTankState newState) {
+        if (currentState != null) {
+            currentState.OnStateExit();
+        }
+        currentState = newState;
+        newState.OnStateEnter(this);
+    }
+
+    public void OnTankEnteredVisibleRange(Vector3 pTank) {
+        if (currentState is PatrolState) {
+            ChangeState(tankView.GetComponent<ChaseState>());
+            tankView.GetComponent<ChaseState>().p0 = tankView.transform.position;
+            tankView.GetComponent<ChaseState>().target = pTank;
+        }
     }
 }
