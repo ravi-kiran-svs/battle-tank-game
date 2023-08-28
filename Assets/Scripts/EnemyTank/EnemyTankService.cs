@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class EnemyTankService : MonoBehaviour {
     private int max_num_tanks = 5;
     private List<Vector3> waypoints = new List<Vector3>();
 
+    public event Action OnTankDeath;
+
     private void Start() {
         for (int i = 0; i < path.childCount; i++) {
             waypoints.Add(path.GetChild(i).transform.position);
@@ -26,7 +29,7 @@ public class EnemyTankService : MonoBehaviour {
 
             TankModel tankModel = new TankModel(100, 100, 20);
 
-            int point = Random.Range(0, waypoints.Count / 2) * 2;
+            int point = UnityEngine.Random.Range(0, waypoints.Count / 2) * 2;
             EnemyTankView tankView = Instantiate<EnemyTankView>(EnemyTankPrefab, waypoints[point], EnemyTankPrefab.transform.rotation, transform);
 
             EnemyTankController tankController = new EnemyTankController(tankModel, tankView, waypoints[point], waypoints[point + 1]);
@@ -38,6 +41,8 @@ public class EnemyTankService : MonoBehaviour {
 
     public void OnDeath() {
         num_tanks--;
+
+        OnTankDeath?.Invoke();
     }
 
     public void OnGameOver() {

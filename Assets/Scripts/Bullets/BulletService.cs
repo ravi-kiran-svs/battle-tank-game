@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class BulletService : MonoBehaviour {
     [SerializeField] private BulletView BulletPrefab;
 
     private static BulletService instance;
+
+    public event Action OnBulletFired;
 
     public static BulletService GetInstance() {
         return instance;
@@ -28,6 +31,8 @@ public class BulletService : MonoBehaviour {
         bulletView.speed = 1000;
 
         BulletController bulletController = new BulletController(bulletView);
+
+        OnBulletFired?.Invoke();
     }
 
 }

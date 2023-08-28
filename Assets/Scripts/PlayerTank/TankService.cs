@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,12 +19,14 @@ public class TankService : MonoBehaviour {
 
     private GameObject tank;
 
+    public event Action OnTankDead;
+
     private void Start() {
         SpawnTank();
     }
 
     private void SpawnTank() {
-        TankModel tankModel = new TankModel(tankPresets[Random.Range(0, 3)]);
+        TankModel tankModel = new TankModel(tankPresets[UnityEngine.Random.Range(0, 3)]);
 
         tank = Instantiate(TankPrefab);
 
@@ -40,6 +43,7 @@ public class TankService : MonoBehaviour {
     }
 
     public void OnTankDeath() {
+        OnTankDead?.Invoke();
         StartCoroutine(StartDeathCoroutines());
     }
 
