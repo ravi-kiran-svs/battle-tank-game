@@ -9,6 +9,9 @@ public class AchievementService : MonoBehaviour {
     [SerializeField] private EnemyTankService enemyService;
     [SerializeField] private TankService tankService;
 
+    [SerializeField] private Transform achievementUIContent;
+    [SerializeField] private AchievementUIText achievementUIText;
+
     private int nBulletsFired = 0;
     private int nEnemiesKilled = 0;
 
@@ -18,25 +21,17 @@ public class AchievementService : MonoBehaviour {
         tankService.OnTankDead += OnTankDeathed;
     }
 
-    private void OnTankDeathed() {
-        Debug.Log("!!! Congratulations !!!");
-        Debug.Log("You are Deathed.");
-    }
-
     private void OnBulletFired() {
         nBulletsFired++;
 
         if (nBulletsFired == 5) {
-            Debug.Log("!!! Congratulations !!!");
-            Debug.Log("You fired 5 bullets.");
+            SpawnAchievementText("!!! Congratulations !!!\nYou fired 5 bullets.");
 
         } else if (nBulletsFired == 10) {
-            Debug.Log("!!! Congratulations !!!");
-            Debug.Log("You fired 10 bullets.");
+            SpawnAchievementText("!!! Congratulations !!!\nYou fired 10 bullets.");
 
         } else if (nBulletsFired == 25) {
-            Debug.Log("!!! Congratulations !!!");
-            Debug.Log("You fired 25 bullets.");
+            SpawnAchievementText("!!! Congratulations !!!\nYou fired 25 bullets.");
         }
     }
 
@@ -44,18 +39,23 @@ public class AchievementService : MonoBehaviour {
         nEnemiesKilled++;
 
         if (nEnemiesKilled == 1) {
-            Debug.Log("!!! Congratulations !!!");
-            Debug.Log("You killed your first enemy.");
-
+            SpawnAchievementText("!!! Congratulations !!!\nYou killed your FIRST enemy.");
 
         } else if (nEnemiesKilled == 5) {
-            Debug.Log("!!! Congratulations !!!");
-            Debug.Log("You killed 5 enemies.");
+            SpawnAchievementText("!!! Congratulations !!!\nYou killed 5 enemies.");
 
         } else if (nEnemiesKilled == 10) {
-            Debug.Log("!!! Congratulations !!!");
-            Debug.Log("You killed 10 enemies.");
+            SpawnAchievementText("!!! Congratulations !!!\nYou fired 10 bullets.");
         }
+    }
+
+    private void OnTankDeathed() {
+        SpawnAchievementText("!!! Congratulations !!!\nYou are DEATHED.");
+    }
+
+    private void SpawnAchievementText(string s) {
+        AchievementUIText text = Instantiate<AchievementUIText>(achievementUIText, achievementUIContent);
+        text.SetText(s);
     }
 
 }
