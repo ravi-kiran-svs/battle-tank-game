@@ -12,7 +12,9 @@ public class BulletHit : MonoBehaviour {
             collision.collider.GetComponent<TankView>().tankController.onDeath();
         }
 
-        Destroy(gameObject);
+        /*Destroy(gameObject);*/
+
+        GameObjectPool.Instance.ReturnItem(gameObject);
     }
 
 }

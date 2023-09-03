@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,5 +17,9 @@ public class BulletView : MonoBehaviour {
 
     private void FixedUpdate() {
         bulletController.Move(dir);
+    }
+
+    public static explicit operator GameObject(BulletView v) {
+        throw new NotImplementedException();
     }
 }
