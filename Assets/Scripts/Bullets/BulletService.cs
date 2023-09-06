@@ -22,10 +22,21 @@ public class BulletService : MonoBehaviour {
         } else {
             instance = this;
         }
+
+        GameObjectPool.Instance.ItsTime(10, (GameObject)BulletPrefab);
     }
 
     public void SpawnBullet(Vector3 pos, Vector3 dir, float damage) {
-        BulletView bulletView = Instantiate<BulletView>(BulletPrefab, pos, (BulletPrefab as MonoBehaviour).transform.rotation, transform);
+        /*BulletView bulletView = Instantiate<BulletView>(BulletPrefab, pos, (BulletPrefab as MonoBehaviour).transform.rotation, transform);
+        bulletView.dir = dir;
+        bulletView.damage = damage;
+        bulletView.speed = 1000;*/
+
+        GameObject go = GameObjectPool.Instance.GetItem();
+        go.SetActive(true);
+        go.transform.position = pos;
+
+        BulletView bulletView = go.GetComponent<BulletView>();
         bulletView.dir = dir;
         bulletView.damage = damage;
         bulletView.speed = 1000;
