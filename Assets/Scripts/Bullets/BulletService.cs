@@ -23,7 +23,10 @@ public class BulletService : MonoBehaviour {
             instance = this;
         }
 
-        GameObjectPool.Instance.ItsTime(10, (GameObject)BulletPrefab);
+    }
+
+    private void Start() {
+        GameObjectPool.Instance.StartNow(10, (GameObject)BulletPrefab);
     }
 
     public void SpawnBullet(Vector3 pos, Vector3 dir, float damage) {

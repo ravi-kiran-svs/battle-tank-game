@@ -2,11 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameObjectPool : ServicePool<GameObject> {
+public class GameObjectPool : MonoBehaviour {
+
+    protected Queue<PooledItem<GameObject>> pooledItems = new Queue<PooledItem<GameObject>>();
 
     private GameObject Prefab;
 
-    public override void ItsTime(int n, GameObject prefab) {
+    private static GameObjectPool instance;
+    public static GameObjectPool Instance { get { return instance; } }
+
+    private void Awake() {
+        if (instance != null) {
+            Destroy(gameObject);
+
+        } else {
+            instance = this;
+        }
+    }
+
+    public void StartNow(int n, GameObject prefab) {
         Debug.Log("LOL");
         Prefab = prefab;
         pooledItems = new Queue<PooledItem<GameObject>>();
@@ -16,18 +30,18 @@ public class GameObjectPool : ServicePool<GameObject> {
         }
     }
 
-    public override GameObject GetItem() {
+    public GameObject GetItem() {
         if (pooledItems.Count == 0) {
             CreateAndAdd(Prefab);
         }
         return pooledItems.Dequeue().item;
     }
 
-    public override void ReturnItem(GameObject go) {
+    public void ReturnItem(GameObject go) {
         pooledItems.Enqueue(new PooledItem<GameObject>(go));
     }
 
-    protected override void CreateAndAdd(GameObject prefab) {
+    protected void CreateAndAdd(GameObject prefab) {
         GameObject go = Instantiate(prefab, transform);
         go.SetActive(false);
         pooledItems.Enqueue(new PooledItem<GameObject>(go));
